@@ -1,0 +1,273 @@
+   1               		.file	"ram_utils.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.section	.text.estimate_alloc,"ax",@progbits
+  17               	.global	estimate_alloc
+  19               	estimate_alloc:
+  20               	.LFB2:
+  21               	.LSM0:
+  22               	.LVL0:
+  23 0000 DF93      		push r29
+  24 0002 CF93      		push r28
+  25 0004 00D0      		rcall .
+  26 0006 CDB7      		in r28,__SP_L__
+  27 0008 DEB7      		in r29,__SP_H__
+  28               	/* prologue: function */
+  29               	/* frame size = 2 */
+  30 000a 9C01      		movw r18,r24
+  31               	.LSM1:
+  32 000c 8091 0000 		lds r24,__brkval
+  33 0010 9091 0000 		lds r25,(__brkval)+1
+  34               	.LVL1:
+  35 0014 0097      		sbiw r24,0
+  36 0016 01F4      		brne .L5
+  37               	.L2:
+  38 0018 80E0      		ldi r24,lo8(__heap_start)
+  39 001a 90E0      		ldi r25,hi8(__heap_start)
+  40               	.L5:
+  41 001c 880F      		lsl r24
+  42 001e 991F      		rol r25
+  43 0020 4427      		clr r20
+  44 0022 5527      		clr r21
+  45 0024 481B      		sub r20,r24
+  46 0026 590B      		sbc r21,r25
+  47 0028 220F      		lsl r18
+  48 002a 331F      		rol r19
+  49 002c 421B      		sub r20,r18
+  50 002e 530B      		sbc r21,r19
+  51 0030 9E01      		movw r18,r28
+  52               	.LVL2:
+  53 0032 2F5F      		subi r18,lo8(-(1))
+  54 0034 3F4F      		sbci r19,hi8(-(1))
+  55 0036 240F      		add r18,r20
+  56 0038 351F      		adc r19,r21
+  57               	.LSM2:
+  58 003a C901      		movw r24,r18
+  59               	/* epilogue start */
+  60 003c 0F90      		pop __tmp_reg__
+  61 003e 0F90      		pop __tmp_reg__
+  62 0040 CF91      		pop r28
+  63 0042 DF91      		pop r29
+  64 0044 0895      		ret
+  65               	.LFE2:
+  67               		.section	.text.estimate_ram,"ax",@progbits
+  68               	.global	estimate_ram
+  70               	estimate_ram:
+  71               	.LFB3:
+  72               	.LSM3:
+  73 0000 DF93      		push r29
+  74 0002 CF93      		push r28
+  75 0004 00D0      		rcall .
+  76 0006 CDB7      		in r28,__SP_L__
+  77 0008 DEB7      		in r29,__SP_H__
+  78               	/* prologue: function */
+  79               	/* frame size = 2 */
+  80               	.LSM4:
+  81 000a 8091 0000 		lds r24,__brkval
+  82 000e 9091 0000 		lds r25,(__brkval)+1
+  83 0012 0097      		sbiw r24,0
+  84 0014 01F4      		brne .L10
+  85               	.L7:
+  86 0016 80E0      		ldi r24,lo8(__heap_start)
+  87 0018 90E0      		ldi r25,hi8(__heap_start)
+  88               	.L10:
+  89 001a 880F      		lsl r24
+  90 001c 991F      		rol r25
+  91 001e 4427      		clr r20
+  92 0020 5527      		clr r21
+  93 0022 481B      		sub r20,r24
+  94 0024 590B      		sbc r21,r25
+  95 0026 9E01      		movw r18,r28
+  96 0028 2F5F      		subi r18,lo8(-(1))
+  97 002a 3F4F      		sbci r19,hi8(-(1))
+  98 002c 240F      		add r18,r20
+  99 002e 351F      		adc r19,r21
+ 100               	.LSM5:
+ 101 0030 C901      		movw r24,r18
+ 102               	/* epilogue start */
+ 103 0032 0F90      		pop __tmp_reg__
+ 104 0034 0F90      		pop __tmp_reg__
+ 105 0036 CF91      		pop r28
+ 106 0038 DF91      		pop r29
+ 107 003a 0895      		ret
+ 108               	.LFE3:
+ 110               		.section	.text.load_rom_string,"ax",@progbits
+ 111               	.global	load_rom_string
+ 113               	load_rom_string:
+ 114               	.LFB5:
+ 115               	.LSM6:
+ 116               	.LVL3:
+ 117 0000 0F93      		push r16
+ 118 0002 1F93      		push r17
+ 119 0004 CF93      		push r28
+ 120 0006 DF93      		push r29
+ 121               	/* prologue: function */
+ 122               	/* frame size = 0 */
+ 123 0008 8C01      		movw r16,r24
+ 124               	.LSM7:
+ 125 000a C1E0      		ldi r28,lo8(1)
+ 126 000c D0E0      		ldi r29,hi8(1)
+ 127               	.LVL4:
+ 128 000e 00C0      		rjmp .L12
+ 129               	.LVL5:
+ 130               	.L13:
+ 131               	.LSM8:
+ 132 0010 2196      		adiw r28,1
+ 133               	.LVL6:
+ 134               	.L12:
+ 135 0012 FC01      		movw r30,r24
+ 136               	.LVL7:
+ 137               	.LBB2:
+ 138               	.LSM9:
+ 139 0014 0196      		adiw r24,1
+ 140               	/* #APP */
+ 141               	 ;  44 "ram_utils.c" 1
+ 142 0016 E491      		lpm r30, Z
+ 143               		
+ 144               	 ;  0 "" 2
+ 145               	.LVL8:
+ 146               	/* #NOAPP */
+ 147               	.LBE2:
+ 148 0018 EE23      		tst r30
+ 149 001a 01F4      		brne .L13
+ 150               	.LSM10:
+ 151 001c CE01      		movw r24,r28
+ 152               	.LVL9:
+ 153 001e 0E94 0000 		call malloc
+ 154               	.LVL10:
+ 155 0022 9C01      		movw r18,r24
+ 156               	.LSM11:
+ 157 0024 0097      		sbiw r24,0
+ 158 0026 01F0      		breq .L14
+ 159 0028 80E0      		ldi r24,lo8(0)
+ 160 002a 90E0      		ldi r25,hi8(0)
+ 161               	.LVL11:
+ 162               	.L15:
+ 163               	.LBB3:
+ 164               	.LBB4:
+ 165               	.LSM12:
+ 166 002c F801      		movw r30,r16
+ 167 002e E80F      		add r30,r24
+ 168 0030 F91F      		adc r31,r25
+ 169               	/* #APP */
+ 170               	 ;  56 "ram_utils.c" 1
+ 171 0032 E491      		lpm r30, Z
+ 172               		
+ 173               	 ;  0 "" 2
+ 174               	.LVL12:
+ 175               	/* #NOAPP */
+ 176               	.LBE4:
+ 177 0034 D901      		movw r26,r18
+ 178 0036 A80F      		add r26,r24
+ 179 0038 B91F      		adc r27,r25
+ 180 003a EC93      		st X,r30
+ 181               	.LSM13:
+ 182 003c 0196      		adiw r24,1
+ 183 003e 8C17      		cp r24,r28
+ 184 0040 9D07      		cpc r25,r29
+ 185 0042 04F0      		brlt .L15
+ 186               	.L14:
+ 187               	.LBE3:
+ 188               	.LSM14:
+ 189 0044 C901      		movw r24,r18
+ 190               	.LVL13:
+ 191               	/* epilogue start */
+ 192 0046 DF91      		pop r29
+ 193 0048 CF91      		pop r28
+ 194               	.LVL14:
+ 195 004a 1F91      		pop r17
+ 196 004c 0F91      		pop r16
+ 197               	.LVL15:
+ 198 004e 0895      		ret
+ 199               	.LFE5:
+ 201               		.section	.text.load_rom_bitmap,"ax",@progbits
+ 202               	.global	load_rom_bitmap
+ 204               	load_rom_bitmap:
+ 205               	.LFB4:
+ 206               	.LSM15:
+ 207               	.LVL16:
+ 208 0000 0F93      		push r16
+ 209 0002 1F93      		push r17
+ 210 0004 CF93      		push r28
+ 211 0006 DF93      		push r29
+ 212               	/* prologue: function */
+ 213               	/* frame size = 0 */
+ 214 0008 8C01      		movw r16,r24
+ 215 000a EB01      		movw r28,r22
+ 216               	.LSM16:
+ 217 000c CB01      		movw r24,r22
+ 218               	.LVL17:
+ 219 000e 0E94 0000 		call malloc
+ 220               	.LVL18:
+ 221 0012 9C01      		movw r18,r24
+ 222               	.LSM17:
+ 223 0014 0097      		sbiw r24,0
+ 224 0016 01F0      		breq .L19
+ 225 0018 80E0      		ldi r24,lo8(0)
+ 226 001a 90E0      		ldi r25,hi8(0)
+ 227               	.LVL19:
+ 228 001c 00C0      		rjmp .L20
+ 229               	.LVL20:
+ 230               	.L21:
+ 231               	.LBB5:
+ 232               	.LBB6:
+ 233               	.LSM18:
+ 234 001e F801      		movw r30,r16
+ 235               	.LVL21:
+ 236 0020 E80F      		add r30,r24
+ 237 0022 F91F      		adc r31,r25
+ 238               	/* #APP */
+ 239               	 ;  33 "ram_utils.c" 1
+ 240 0024 E491      		lpm r30, Z
+ 241               		
+ 242               	 ;  0 "" 2
+ 243               	.LVL22:
+ 244               	/* #NOAPP */
+ 245               	.LBE6:
+ 246 0026 D901      		movw r26,r18
+ 247 0028 A80F      		add r26,r24
+ 248 002a B91F      		adc r27,r25
+ 249 002c EC93      		st X,r30
+ 250               	.LSM19:
+ 251 002e 0196      		adiw r24,1
+ 252               	.L20:
+ 253 0030 8C17      		cp r24,r28
+ 254 0032 9D07      		cpc r25,r29
+ 255 0034 04F0      		brlt .L21
+ 256               	.L19:
+ 257               	.LBE5:
+ 258               	.LSM20:
+ 259 0036 C901      		movw r24,r18
+ 260               	.LVL23:
+ 261               	/* epilogue start */
+ 262 0038 DF91      		pop r29
+ 263 003a CF91      		pop r28
+ 264               	.LVL24:
+ 265 003c 1F91      		pop r17
+ 266 003e 0F91      		pop r16
+ 267               	.LVL25:
+ 268 0040 0895      		ret
+ 269               	.LFE4:
+ 319               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 ram_utils.c
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:2      *ABS*:0000003f __SREG__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:3      *ABS*:0000003e __SP_H__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:4      *ABS*:0000003d __SP_L__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:5      *ABS*:00000034 __CCP__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:6      *ABS*:00000000 __tmp_reg__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:7      *ABS*:00000001 __zero_reg__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:19     .text.estimate_alloc:00000000 estimate_alloc
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:70     .text.estimate_ram:00000000 estimate_ram
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:113    .text.load_rom_string:00000000 load_rom_string
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccWKFvtJ.s:204    .text.load_rom_bitmap:00000000 load_rom_bitmap
+
+UNDEFINED SYMBOLS
+__brkval
+__heap_start
+malloc

@@ -1,0 +1,216 @@
+   1               		.file	"lcd.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.section	.text.lcd_write,"ax",@progbits
+  17               	.global	lcd_write
+  19               	lcd_write:
+  20               	.LFB7:
+  21               	.LSM0:
+  22               	.LVL0:
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	.LSM1:
+  26 0000 95B1      		in r25,37-32
+  27 0002 8295      		swap r24
+  28               	.LVL1:
+  29 0004 880F      		lsl r24
+  30 0006 807E      		andi r24,lo8(-32)
+  31 0008 9F7D      		andi r25,lo8(-33)
+  32 000a 982B      		or r25,r24
+  33 000c 95B9      		out 37-32,r25
+  34               	.LSM2:
+  35 000e 5F98      		cbi 43-32,7
+  36 0010 27E0      		ldi r18,lo8(7)
+  37 0012 30E0      		ldi r19,hi8(7)
+  38               	.LVL2:
+  39               	.LBB2:
+  40               	.LSM3:
+  41 0014 70E0      		ldi r23,lo8(0)
+  42               	.LVL3:
+  43               	.L4:
+  44               	.LSM4:
+  45 0016 8F98      		cbi 49-32,7
+  46               	.LSM5:
+  47 0018 CB01      		movw r24,r22
+  48 001a 022E      		mov r0,r18
+  49 001c 00C0      		rjmp 2f
+  50 001e 9595      	1:	asr r25
+  51 0020 8795      		ror r24
+  52 0022 0A94      	2:	dec r0
+  53 0024 02F4      		brpl 1b
+  54 0026 80FF      		sbrs r24,0
+  55 0028 00C0      		rjmp .L2
+  56               	.LSM6:
+  57 002a 2E9A      		sbi 37-32,6
+  58 002c 00C0      		rjmp .L3
+  59               	.L2:
+  60               	.LSM7:
+  61 002e 2E98      		cbi 37-32,6
+  62               	.L3:
+  63               	.LSM8:
+  64 0030 8F9A      		sbi 49-32,7
+  65               	.LSM9:
+  66 0032 2150      		subi r18,lo8(-(-1))
+  67 0034 3040      		sbci r19,hi8(-(-1))
+  68 0036 8FEF      		ldi r24,hi8(-1)
+  69 0038 2F3F      		cpi r18,lo8(-1)
+  70 003a 3807      		cpc r19,r24
+  71 003c 01F4      		brne .L4
+  72               	.LBE2:
+  73               	.LSM10:
+  74 003e 5F9A      		sbi 43-32,7
+  75               	/* epilogue start */
+  76               	.LSM11:
+  77 0040 0895      		ret
+  78               	.LFE7:
+  80               		.section	.text.lcd_init,"ax",@progbits
+  81               	.global	lcd_init
+  83               	lcd_init:
+  84               	.LFB6:
+  85               	.LSM12:
+  86               	.LVL4:
+  87 0000 1F93      		push r17
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90 0002 182F      		mov r17,r24
+  91               	.LSM13:
+  92 0004 579A      		sbi 42-32,7
+  93               	.LSM14:
+  94 0006 249A      		sbi 36-32,4
+  95               	.LSM15:
+  96 0008 259A      		sbi 36-32,5
+  97               	.LSM16:
+  98 000a 269A      		sbi 36-32,6
+  99               	.LSM17:
+ 100 000c 879A      		sbi 48-32,7
+ 101               	.LSM18:
+ 102 000e 2C98      		cbi 37-32,4
+ 103               	.LSM19:
+ 104 0010 5F9A      		sbi 43-32,7
+ 105               	.LSM20:
+ 106 0012 2C9A      		sbi 37-32,4
+ 107               	.LSM21:
+ 108 0014 80E0      		ldi r24,lo8(0)
+ 109               	.LVL5:
+ 110 0016 61E2      		ldi r22,lo8(33)
+ 111 0018 0E94 0000 		call lcd_write
+ 112               	.LSM22:
+ 113 001c 1068      		ori r17,lo8(-128)
+ 114 001e 80E0      		ldi r24,lo8(0)
+ 115 0020 612F      		mov r22,r17
+ 116 0022 0E94 0000 		call lcd_write
+ 117               	.LSM23:
+ 118 0026 80E0      		ldi r24,lo8(0)
+ 119 0028 64E0      		ldi r22,lo8(4)
+ 120 002a 0E94 0000 		call lcd_write
+ 121               	.LSM24:
+ 122 002e 80E0      		ldi r24,lo8(0)
+ 123 0030 63E1      		ldi r22,lo8(19)
+ 124 0032 0E94 0000 		call lcd_write
+ 125               	.LSM25:
+ 126 0036 80E0      		ldi r24,lo8(0)
+ 127 0038 6CE0      		ldi r22,lo8(12)
+ 128 003a 0E94 0000 		call lcd_write
+ 129               	.LSM26:
+ 130 003e 80E0      		ldi r24,lo8(0)
+ 131 0040 60E2      		ldi r22,lo8(32)
+ 132 0042 0E94 0000 		call lcd_write
+ 133               	.LSM27:
+ 134 0046 80E0      		ldi r24,lo8(0)
+ 135 0048 6CE0      		ldi r22,lo8(12)
+ 136 004a 0E94 0000 		call lcd_write
+ 137               	.LSM28:
+ 138 004e 80E0      		ldi r24,lo8(0)
+ 139 0050 60E4      		ldi r22,lo8(64)
+ 140 0052 0E94 0000 		call lcd_write
+ 141               	.LSM29:
+ 142 0056 80E0      		ldi r24,lo8(0)
+ 143 0058 60E8      		ldi r22,lo8(-128)
+ 144 005a 0E94 0000 		call lcd_write
+ 145               	/* epilogue start */
+ 146               	.LSM30:
+ 147 005e 1F91      		pop r17
+ 148               	.LVL6:
+ 149 0060 0895      		ret
+ 150               	.LFE6:
+ 152               		.section	.text.lcd_clear,"ax",@progbits
+ 153               	.global	lcd_clear
+ 155               	lcd_clear:
+ 156               	.LFB8:
+ 157               	.LSM31:
+ 158 0000 CF93      		push r28
+ 159 0002 DF93      		push r29
+ 160               	/* prologue: function */
+ 161               	/* frame size = 0 */
+ 162               	.LSM32:
+ 163 0004 C0E0      		ldi r28,lo8(0)
+ 164 0006 D0E0      		ldi r29,hi8(0)
+ 165               	.LVL7:
+ 166               	.L10:
+ 167               	.LBB3:
+ 168               	.LSM33:
+ 169 0008 81E0      		ldi r24,lo8(1)
+ 170 000a 60E0      		ldi r22,lo8(0)
+ 171 000c 0E94 0000 		call lcd_write
+ 172               	.LSM34:
+ 173 0010 2196      		adiw r28,1
+ 174 0012 81E0      		ldi r24,hi8(504)
+ 175 0014 C83F      		cpi r28,lo8(504)
+ 176 0016 D807      		cpc r29,r24
+ 177 0018 01F4      		brne .L10
+ 178               	/* epilogue start */
+ 179               	.LBE3:
+ 180               	.LSM35:
+ 181 001a DF91      		pop r29
+ 182 001c CF91      		pop r28
+ 183               	.LVL8:
+ 184 001e 0895      		ret
+ 185               	.LFE8:
+ 187               		.section	.text.lcd_position,"ax",@progbits
+ 188               	.global	lcd_position
+ 190               	lcd_position:
+ 191               	.LFB9:
+ 192               	.LSM36:
+ 193               	.LVL9:
+ 194 0000 1F93      		push r17
+ 195               	/* prologue: function */
+ 196               	/* frame size = 0 */
+ 197 0002 182F      		mov r17,r24
+ 198               	.LSM37:
+ 199 0004 6064      		ori r22,lo8(64)
+ 200               	.LVL10:
+ 201 0006 80E0      		ldi r24,lo8(0)
+ 202               	.LVL11:
+ 203 0008 0E94 0000 		call lcd_write
+ 204               	.LVL12:
+ 205               	.LSM38:
+ 206 000c 1068      		ori r17,lo8(-128)
+ 207 000e 80E0      		ldi r24,lo8(0)
+ 208 0010 612F      		mov r22,r17
+ 209 0012 0E94 0000 		call lcd_write
+ 210               	/* epilogue start */
+ 211               	.LSM39:
+ 212 0016 1F91      		pop r17
+ 213               	.LVL13:
+ 214 0018 0895      		ret
+ 215               	.LFE9:
+ 265               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 lcd.c
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:2      *ABS*:0000003f __SREG__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:3      *ABS*:0000003e __SP_H__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:4      *ABS*:0000003d __SP_L__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:5      *ABS*:00000034 __CCP__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:6      *ABS*:00000000 __tmp_reg__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:7      *ABS*:00000001 __zero_reg__
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:19     .text.lcd_write:00000000 lcd_write
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:83     .text.lcd_init:00000000 lcd_init
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:155    .text.lcd_clear:00000000 lcd_clear
+C:\cygwin\cab202_software\cab202_software\cygwin\tmp/ccaKym1y.s:190    .text.lcd_position:00000000 lcd_position
+
+NO UNDEFINED SYMBOLS
